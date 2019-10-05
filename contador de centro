@@ -1,0 +1,57 @@
+int LED13 = 13;
+int Trigger_izq = 11;
+int Echo_izq = 10;
+
+int izquierdo = 0;
+int izquierdo_cuenta = 0;
+int izquierdo_anterior = 0;
+int izquierdo_ahora = 0;
+
+int izquierdo_duracion,izquierdo_distancia;
+
+
+void setup() {
+  pinMode(LED13, OUTPUT);
+  pinMode(Trigger_izq, OUTPUT);
+  pinMode(Echo_izq, INPUT);
+  Serial.begin(9600);
+}
+
+void loop(){
+delay(100);
+    
+    digitalWrite (Trigger_izq, HIGH);
+    delayMicroseconds (10);
+    digitalWrite (Trigger_izq, LOW);
+    izquierdo_duracion = pulseIn (Echo_izq, HIGH);
+    izquierdo_distancia = (izquierdo_duracion/2) / 29.1;
+
+  if (izquierdo_distancia < 20) { // Se esta a menos de 20 activa izquierdo.
+      izquierdo = HIGH;
+      digitalWrite (LED13, HIGH);
+    }
+ else {
+      izquierdo = LOW;
+      digitalWrite (LED13, LOW);
+    }  
+ 
+//izquierdo = digitalRead(LED13);
+
+if (izquierdo ==  HIGH) { // Comprueba activado izquierdo.
+izquierdo_ahora = 1;
+}
+else {
+izquierdo_ahora = 0;
+}
+
+
+if(izquierdo_ahora != izquierdo_anterior){
+if(izquierdo_ahora == 1){
+izquierdo_cuenta = izquierdo_cuenta + 1;
+Serial.print("izquierdo_cuenta: "); 
+Serial.println(izquierdo_cuenta);
+}
+}
+izquierdo_anterior = izquierdo_ahora;
+
+}
