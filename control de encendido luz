@@ -1,0 +1,33 @@
+#define RETARDO 30000 
+
+const byte sensor   = 7;
+const byte luz     = 8;
+bool estado, estadoAnt  = false;
+unsigned long start;
+
+void setup() {
+  pinMode(sensor, INPUT);
+  pinMode(luz, OUTPUT);
+  digitalWrite(luz, LOW);
+}
+
+void loop() {
+  estado = digitalRead(sensor);
+  if (estado){
+    digitalWrite(luz, HIGH);
+  }
+  if (!estado) {
+    if (!estado && estadoAnt) {    
+        retengoLed = true;      
+        start = millis()+ RETARDO;
+    }
+    
+    if (retengoLed) {
+      if (millis()>start) {
+        retengoLed = false;    
+      }
+    }
+    else   
+      digitalWrite(luz, LOW);
+  }
+}
