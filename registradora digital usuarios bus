@@ -1,0 +1,64 @@
+const int trigger = PA10;
+  const int echo = PA8;
+  const int limite = 15; 
+  long tiempo;  
+  float distancia;  
+  int cont=1;
+  
+  const int led = PB11;
+  int saldo;
+
+
+void setup() {
+  
+   
+   
+
+  
+  pinMode(trigger,OUTPUT); 
+  pinMode(echo,INPUT);   
+  Serial.begin(9600); 
+  pinMode(led, OUTPUT); 
+  
+}
+
+void loop() {
+
+  
+  if(distancia<limite)
+  {
+   
+   conta();
+    
+  }
+  
+  
+  
+}
+void sensorUltrasonidos()
+{
+
+    digitalWrite(trigger,LOW); 
+    delayMicroseconds(10);
+
+    digitalWrite(trigger, HIGH);
+    delayMicroseconds(10);
+    tiempo=pulseIn(echo, HIGH); 
+    distancia= int(tiempo/58); 
+    
+   
+    delay(200);
+
+}
+void conta(){
+    cont++;
+    saldo=cont*5300;
+
+    digitalWrite(led, HIGH);
+
+   Serial.print("usuarios de trasporte:"); 
+   Serial.println(cont);
+    Serial.print("Saldo: "); 
+   Serial.println(saldo);
+   delay(1000);
+   digitalWrite(led, LOW);
