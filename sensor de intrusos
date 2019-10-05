@@ -1,0 +1,41 @@
+const int pinecho = PB13;
+const int pintrigger = PB12;
+const int pinled = PC13;
+unsigned int tiempo, distancia;
+ 
+void setup() {
+  Serial.begin(9600);
+  pinMode(pinecho, INPUT);
+  pinMode(pintrigger, OUTPUT);
+  pinMode(pinled, OUTPUT);
+}
+
+
+
+void loop() {
+  
+  digitalWrite(pintrigger, LOW);  
+  delayMicroseconds(2);
+  digitalWrite(pintrigger, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(pintrigger, LOW);
+ 
+  
+  tiempo = pulseIn(pinecho, HIGH);
+ 
+  distancia = tiempo / 58;
+ 
+  // ENVIAR EL RESULTADO AL MONITOR SERIAL
+  Serial.print("el intruso esta cerca" + distancia);
+  Serial.println(" cm");
+  delay(200);
+ 
+}
+
+void michi1 (){
+
+  if (distancia <= 300) {
+    digitalWrite(PC13, LOW);
+    delay(100);
+     Serial.print("intruso");
+  } 
